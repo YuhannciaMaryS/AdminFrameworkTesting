@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="KRCE Automation Suite">
+
+    <test name="All Tests">
+        <classes>
+
+            <class name="com.krce.tests.BasicAuthTest"/>
+            <class name="com.krce.tests.DynamicElementsTest"/>
+            <class name="com.krce.tests.FormInteractionTest"/>
+
+        </classes>
+    </test>
+
+</suite>

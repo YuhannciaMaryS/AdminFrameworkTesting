@@ -55,7 +55,7 @@ public class FormInteractionTest extends BaseTest {
 
         String actual = form.getDropdownResult();
 
-        Assert.assertEquals(actual, "dd1");
+        Assert.assertEquals(actual, "Drop Down Item 1");
     }
 
     @Test
@@ -67,10 +67,12 @@ public class FormInteractionTest extends BaseTest {
         home.navigateToHomePage();
         form.navigateToHtmlForm();
 
-        form.uploadFile("C:\\Users\\yuhan\\Desktop\\test.txt");
+        String filePath = "C:\\Users\\yuhan\\Downloads\\HCL GUVI Certification - Nx4088P112b787030f.png";
+
+        form.uploadFile(filePath);
         form.submitForm();
 
-        Assert.assertTrue(driver.getPageSource().contains("test.txt"));
+        Assert.assertTrue(driver.getPageSource().contains("HCL GUVI Certification"));
     }
 
     @Test

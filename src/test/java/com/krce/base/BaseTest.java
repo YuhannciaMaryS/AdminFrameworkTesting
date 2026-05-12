@@ -1,5 +1,7 @@
 package com.krce.base;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.krce.utilities.ConfigReader;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -12,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
 
@@ -66,4 +69,8 @@ public class BaseTest {
             driver.quit();
         }
     }
+
+
+
+
 }

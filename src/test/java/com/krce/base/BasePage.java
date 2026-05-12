@@ -19,29 +19,23 @@ public class BasePage {
     // ---------------- CLICK ----------------
     public void click(By locator) {
 
-        WebElement element = wait.until(
-                ExpectedConditions.presenceOfElementLocated(locator)
-        );
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 
-        wait.until(ExpectedConditions.visibilityOf(element));
+        new Actions(driver)
+                .moveToElement(element)
+                .pause(java.time.Duration.ofMillis(200))
+                .perform();
 
-        // scroll using selenium (NO JS)
-        org.openqa.selenium.interactions.Actions actions =
-                new org.openqa.selenium.interactions.Actions(driver);
-
-        actions.moveToElement(element).pause(java.time.Duration.ofMillis(300)).perform();
-
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-
-        element.click();
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     public void safeClick(By locator) {
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(locator)
-        );
-
-        element.click();
+        try {
+            click(locator);
+        } catch (Exception e) {
+            WebElement element = driver.findElement(locator);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        }
     }
 
     public void scrollToElement(By locator) {

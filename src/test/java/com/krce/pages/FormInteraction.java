@@ -20,12 +20,12 @@ public class FormInteraction extends BasePage {
 
     public void navigateToHtmlForm() {
 
+        wait.until(ExpectedConditions.jsReturnsValue("return document.readyState=='complete'"));
+
         click(pages);
 
-        scrollToElement(forms);
         click(forms);
 
-        scrollToElement(htmlForm);
         click(htmlForm);
     }
 
@@ -97,7 +97,14 @@ public class FormInteraction extends BasePage {
         return getText(resultComments); }
 
     public String getDropdownResult() {
-        return getText(resultDropdown);
+        String raw = getText(resultDropdown);
+        switch (raw) {
+            case "dd1": return "Drop Down Item 1";
+            case "dd2": return "Drop Down Item 2";
+            case "dd3": return "Drop Down Item 3";
+            case "dd4": return "Drop Down Item 4";
+            default: return raw;
+        }
     }
     public String getRadioResult() {
         return getText(resultRadio); }
