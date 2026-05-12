@@ -12,6 +12,9 @@
             <class name="com.krce.tests.FormInteractionTest"/>
             <class name="com.krce.tests.TableTest"/>
             <class name="com.krce.tests.JSAlertTest"/>
+            <class name="com.krce.tests.DynamicElementsTest"/>
+            <class name="com.krce.tests.FramesTest"/>
+
         </classes>
 
     </test>

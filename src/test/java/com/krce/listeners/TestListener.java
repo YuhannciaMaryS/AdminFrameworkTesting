@@ -1,11 +1,11 @@
 package com.krce.listeners;
 
 import com.krce.base.BaseTest;
-import com.krce.utils.ExtentReportManager;
+import com.krce.utilities.ExtentReportManager;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import com.krce.utils.ScreenshotUtil;
+import com.krce.utilities.ScreenshotUtil;
 
 public class TestListener extends BaseTest implements ITestListener {
 
