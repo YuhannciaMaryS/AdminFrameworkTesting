@@ -1,37 +1,36 @@
-package com.krce.utils;
+package com.krce.utilities;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
-import org.apache.commons.io.FileUtils;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ScreenshotUtil {
 
-    public static String takeScreenshot(WebDriver driver, String testName) {
+    public static String captureScreenshot(WebDriver driver, String testName) {
 
-        // STEP 1: Convert driver to screenshot type
-        TakesScreenshot ts = (TakesScreenshot) driver;
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
 
-        // STEP 2: Capture screenshot as file
-        File src = ts.getScreenshotAs(OutputType.FILE);
+        String screenshotPath =
+                "screenshots/" + testName + "_" + timeStamp + ".png";
 
-        // STEP 3: Define where to store it
-        String path = System.getProperty("user.dir")
-                + "/screenshots/" + testName + ".png";
+        File srcFile = ((TakesScreenshot) driver)
+                .getScreenshotAs(OutputType.FILE);
 
-        File dest = new File(path);
+        File destFile = new File(screenshotPath);
 
-        // STEP 4: Copy file to folder
         try {
-            FileUtils.copyFile(src, dest);
+            FileUtils.copyFile(srcFile, destFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // STEP 5: Return path (optional use later)
-        return path;
+        return screenshotPath;
     }
 }

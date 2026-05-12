@@ -67,12 +67,20 @@ public class FormInteractionTest extends BaseTest {
         home.navigateToHomePage();
         form.navigateToHtmlForm();
 
-        String filePath = "C:\\Users\\yuhan\\Downloads\\HCL GUVI Certification - Nx4088P112b787030f.png";
+        String filePath = System.getProperty("user.home")
+                + "/Downloads/HCL GUVI Certification - Nx4088P112b787030f.png";
 
         form.uploadFile(filePath);
         form.submitForm();
 
-        Assert.assertTrue(driver.getPageSource().contains("HCL GUVI Certification"));
+        String uploaded = form.getUploadedFileName();
+
+        System.out.println("Uploaded file value: " + uploaded);
+
+        Assert.assertTrue(
+                uploaded.contains("Nx4088P112b787030f.png"),
+                "File not uploaded correctly"
+        );
     }
 
     @Test

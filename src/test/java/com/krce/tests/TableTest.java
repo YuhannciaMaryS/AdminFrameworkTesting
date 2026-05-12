@@ -57,6 +57,6 @@ public class TableTest extends BaseTest {
 
         String value = table.getCell(1, 0); // Bob row
 
-        Assert.assertEquals(value, "Bob");
+        Assert.assertEquals(value, "Bobb");
     }
 }

@@ -1,39 +1,52 @@
 package com.krce.listeners;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.krce.utilities.ExtentManager;
-import org.testng.*;
+import com.krce.base.BaseTest;
+import com.krce.utils.ExtentReportManager;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+import com.krce.utils.ScreenshotUtil;
 
-public class TestListener implements ITestListener {
+public class TestListener extends BaseTest implements ITestListener {
 
-    ExtentReports extent = ExtentManager.getReportObject();
-    ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    @Override
+    public void onStart(ITestContext context) {
+        ExtentReportManager.getInstance();
+    }
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentTest extentTest =
-                extent.createTest(result.getMethod().getMethodName());
-
-        test.set(extentTest);
-        test.get().info("🚀 Test Started");
+        ExtentReportManager.createTest(result.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        test.get().pass("✔ Test Passed");
+        ExtentReportManager.getTest().pass("Test Passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        test.get().fail("❌ Test Failed");
-        test.get().fail(result.getThrowable());
+
+        ExtentReportManager.getTest()
+                .fail("Test Failed: " + result.getThrowable());
+
+        String screenshotPath =
+                ScreenshotUtil.captureScreenshot(
+                        BaseTest.driver,
+                        result.getMethod().getMethodName()
+                );
+
+        ExtentReportManager.getTest()
+                .addScreenCaptureFromPath(screenshotPath);
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        ExtentReportManager.getTest().skip("Test Skipped");
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        extent.flush();
-        System.out.println("📊 Report Generated");
-        System.out.println(System.getProperty("user.dir"));
+        ExtentReportManager.flush();
     }
 }

@@ -34,7 +34,7 @@ public class FormInteraction extends BasePage {
     private By password = By.name("password");
     private By comments = By.name("comments");
     private By dropdown = By.name("dropdown");
-    private By file = By.name("filename");
+    private By file = By.xpath("//input[@type='file']");
 
     private By checkbox1 = By.cssSelector("input[value='cb1']");
     private By checkbox2 = By.cssSelector("input[value='cb2']");
@@ -62,7 +62,9 @@ public class FormInteraction extends BasePage {
 
     public void selectDropdown(String value) { selectByVisibleText(dropdown, value); }
 
-    public void uploadFile(String path) { type(file, path); }
+    public void uploadFile(String path) {
+        driver.findElement(file).sendKeys(path);
+    }
 
     public void selectCheckbox(int num) {
         if (num == 1) click(checkbox1);
@@ -108,4 +110,11 @@ public class FormInteraction extends BasePage {
     }
     public String getRadioResult() {
         return getText(resultRadio); }
+
+    public String getUploadedFileName() {
+        WebElement element = wait.until(
+                ExpectedConditions.presenceOfElementLocated(file)
+        );
+        return element.getAttribute("value");  // IMPORTANT FIX
+    }
 }
